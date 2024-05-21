@@ -93,8 +93,57 @@ class Rental{
     }
 }
 class CarRentalSystem{
+    private ArrayList <Car>cars;
+    private ArrayList <Customer>customers;
+    private ArrayList < Rental >rentals;
     
+    public CarRentalSystem(){
+         cars= new ArrayList < Car> ();
+         customers=new ArrayList <Customer> ();
+         rentals= new ArrayList < Rental > ();
+    }
+    public void addCar(Car car)
+    {
+        cars.add(car);
+    }
+    public void addCustomers(Customer cust)
+    {
+        customers.add(cust);
+    }
+    public void rentcar(Car car, Customer cust, int days)
+    {
+        if(car.isAvailable())
+        {
+            car.rent();
+            rentals.add(new Rental(car,cust, days));
+            System.out.println("Car is rented");
+        }
+        else
+        {
+           System.out.println("Car is not availble");   
+        }
+    }
+    public void returncar(Car car, Customer cust)
+    {
+        car.returnCar();
+        boolean f=false;
+        for(Rental r: rentals)
+        {
+            if(r.getCar()==car && r.getCustomer()==cust)
+            {
+                rentals.remove(r);
+                System.out.println("Car returned successfully");
+                f=true;
+                break;
+            }
+        }
+        if(!f)
+        {
+            System.out.println("Wrong information. No such rental record");
+        }
+    }
 }
+    
 public class Main {
     public static void main(String[] args) {
        
